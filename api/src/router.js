@@ -32,6 +32,9 @@ router.post('/upload', upload.single('photo'), (request, response) => {
       error: request.fileValidationError,
     });
   }
+  return response.status(201).json({
+    success: true,
+  });
 });
 
 module.exports = router;
