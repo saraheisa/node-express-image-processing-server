@@ -6,6 +6,8 @@ const pathToMonochromeWorker = path.resolve(__dirname, 'monochromeWorker.js');
 
 function imageProcessor(filename) {
   const sourcePath  = uploadPathResolver(filename);
+  const resizedDestination = uploadPathResolver(`resized-${filename}`);
+  
   return new Promise((resolve, reject) => {
     // check if we are in main thread
     if (isMainThread) {
