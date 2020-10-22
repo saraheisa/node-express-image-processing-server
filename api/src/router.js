@@ -8,6 +8,11 @@ const storage = multer.diskStorage({
   filename: filename,
 });
 
+const upload = multer({
+  fileFilter,
+  storage,
+});
+
 function filename(request, file, callback) {
   callback(null, file.originalname);
 }
