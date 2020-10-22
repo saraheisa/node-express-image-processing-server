@@ -26,4 +26,12 @@ function fileFilter(request, file, callback) {
   }
 }
 
+router.post('/upload', upload.single('photo'), (request, response) => {
+  if (request.fileValidationError) {
+    return response.status(400).json({
+      error: request.fileValidationError,
+    });
+  }
+});
+
 module.exports = router;
