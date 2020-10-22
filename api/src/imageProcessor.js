@@ -19,6 +19,14 @@ function imageProcessor(filename) {
             destination: resizedDestination,
           },
         });
+
+        monochromeWorker = new Worker(pathToMonochromeWorker, {
+          workerData: {
+            source: sourcePath,
+            destination: monochromeDestination,
+          },
+        });
+
       } catch (error) {
         reject(error);
       }
