@@ -48,6 +48,10 @@ function imageProcessor(filename) {
           if (resizeWorkerFinished) resolve('monochromeWorker finished processing');
         });
 
+        monochromeWorker.on('error', (error) => {
+          reject(new Error(error.message));
+        });
+
       } catch (error) {
         reject(error);
       }
