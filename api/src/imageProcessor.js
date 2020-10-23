@@ -10,6 +10,7 @@ function imageProcessor(filename) {
   const monochromeDestination = uploadPathResolver(`monochrome-${filename}`);
 
   let resizeWorkerFinished = false;
+  let monochromeWorkerFinished = false;
 
   return new Promise((resolve, reject) => {
     // check if we are in main thread
@@ -31,15 +32,20 @@ function imageProcessor(filename) {
 
         resizeWorker.on('message', (message) => {
           resizeWorkerFinished = true;
-          resolve('resizeWorker finished processing');
+          if (monochromeWorkerFinished) resolve('resizeWorker finished processing');
         });
-
+        
         resizeWorker.on('error', (error) => {
           reject(new Error(error.message));
         });
         
         resizeWorker.on('exit', (code) => {
           if (code != 0) reject(new Error(`Exited with status code ${code}`));
+        });
+        
+        monochromeWorker.on('message', (message) => {
+          monochromeWorkerFinished = true;
+          if (resizeWorkerFinished) resolve('monochromeWorker finished processing');
         });
 
       } catch (error) {
