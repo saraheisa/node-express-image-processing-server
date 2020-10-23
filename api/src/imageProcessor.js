@@ -34,6 +34,10 @@ function imageProcessor(filename) {
           resolve('resizeWorker finished processing');
         });
 
+        resizeWorker.on('error', (error) => {
+          reject(new Error(error.message));
+        });
+
       } catch (error) {
         reject(error);
       }
